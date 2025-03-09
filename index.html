@@ -9,9 +9,10 @@
             font-family: 'Pixel';
             src: url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
         }
-        body {
+        html, body {
             margin: 0;
             padding: 0;
+            height: 100vh; /* Ensure full viewport height */
             font-family: 'Pixel', monospace;
             background: #1a1a1a;
             color: #00ffcc;
@@ -53,17 +54,18 @@
         .ad-left, .ad-right {
             background: #2a2a2a;
             width: 150px;
-            min-height: 100%; /* Match container height */
+            height: 100%; /* Match container height */
             text-align: center;
-            line-height: 50px; /* Adjust for text */
+            line-height: 50px;
             border: 3px solid #00ffff;
             color: #00ffff;
-            overflow: hidden; /* Prevent overflow */
+            overflow: hidden;
         }
         .main-section {
             display: flex;
             flex: 1;
-            min-height: 0; /* Allow flex to shrink */
+            min-height: 0;
+            height: calc(100vh - 260px); /* Adjust for ad-top, shoutout, nav, ad-bottom */
         }
         .top-menu {
             background: #1a1a1a;
@@ -108,6 +110,15 @@
             background: #ff00ff;
             color: #1a1a1a;
             text-shadow: 0 0 5px #ff00ff;
+            animation: glitch 0.3s infinite;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, 0); }
+            80% { transform: translate(2px, 0); }
+            100% { transform: translate(0); }
         }
         .dropdown:hover .dropdown-content {
             display: block;
@@ -120,16 +131,17 @@
             flex: 1;
             padding: 20px;
             background: #1a1a1a;
-            overflow-y: auto; /* Enable vertical scroll */
+            overflow-y: auto;
             position: relative;
             z-index: 11;
+            height: 100%; /* Match parent height */
         }
         iframe {
             width: 100%;
             height: 100%;
             border: 3px solid #00ffcc;
             background: #1a1a1a;
-            display: block; /* Prevent margin collapse */
+            display: block;
         }
         #shoutout {
             background: #1a1a1a;
