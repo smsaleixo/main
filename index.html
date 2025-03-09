@@ -72,30 +72,33 @@
         }
         .top-menu {
             background: #1a1a1a;
-            padding: 10px 0;
+            padding: 10px;
             border-bottom: 3px dashed #00ffcc;
             flex-shrink: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            flex-wrap: nowrap; /* Prevent wrapping for now */
+            gap: 30px; /* Increased spacing */
+            overflow-x: auto; /* Allow horizontal scroll if needed */
+            white-space: nowrap; /* Prevent text wrapping */
         }
         .dropdown {
             position: relative;
-            display: inline-flex;
-            align-items: center;
         }
         .dropdown-btn {
             color: #00ffcc;
             text-decoration: none;
-            padding: 10px 20px;
+            padding: 10px 15px;
             cursor: pointer;
             text-transform: uppercase;
             transition: all 0.2s;
+            display: inline-block; /* Ensure proper spacing */
         }
         .dropdown-btn:hover {
-            text-shadow: 0 0 10px #00ffcc;
+            background: #ff66cc;
+            color: #1a1a1a;
+            text-shadow: 0 0 10px #ff66cc;
         }
         .dropdown-content {
             display: none;
@@ -104,7 +107,7 @@
             min-width: 160px;
             border: 3px solid #ff00ff;
             z-index: 11;
-            top: 100%; /* Position below button */
+            top: 100%;
             left: 0;
         }
         .dropdown-content a {
@@ -133,20 +136,19 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
-        .dropdown:hover .dropdown-btn {
-            background: #ff66cc;
-            color: #1a1a1a;
-        }
         .top-menu a, .top-menu label {
             color: #00ffcc;
             text-decoration: none;
-            padding: 10px 20px;
+            padding: 10px 15px;
             cursor: pointer;
             text-transform: uppercase;
             transition: all 0.2s;
+            display: inline-block;
         }
         .top-menu a:hover, .top-menu label:hover {
-            text-shadow: 0 0 10px #00ffcc;
+            background: #ff66cc;
+            color: #1a1a1a;
+            text-shadow: 0 0 10px #ff66cc;
         }
         .content {
             flex: 1;
@@ -232,7 +234,7 @@
                     <a onclick="loadPage('pythoneditor.html')">Python Editor</a>
                 </div>
             </div>
-            <label style="color: #00ffcc;">
+            <label>
                 <input type="checkbox" id="chaosMode" onchange="toggleChaos()"> Chaos Mode
             </label>
             <a onclick="loadPage('about.html')">About</a>
