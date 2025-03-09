@@ -78,22 +78,24 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-wrap: nowrap; /* Prevent wrapping for now */
-            gap: 30px; /* Increased spacing */
-            overflow-x: auto; /* Allow horizontal scroll if needed */
-            white-space: nowrap; /* Prevent text wrapping */
+            flex-wrap: nowrap;
+            gap: 20px; /* Reduced gap for tighter control */
+            overflow-x: auto;
+            white-space: nowrap;
         }
         .dropdown {
             position: relative;
+            display: flex; /* Switch to flex for better alignment */
+            align-items: center;
         }
         .dropdown-btn {
             color: #00ffcc;
             text-decoration: none;
-            padding: 10px 15px;
+            padding: 8px 12px; /* Reduced padding */
             cursor: pointer;
             text-transform: uppercase;
-            transition: all 0.2s;
-            display: inline-block; /* Ensure proper spacing */
+            transition: background 0.2s, color 0.2s, text-shadow 0.2s; /* Specify transitions */
+            border-radius: 5px; /* Add slight rounding for clarity */
         }
         .dropdown-btn:hover {
             background: #ff66cc;
@@ -139,11 +141,11 @@
         .top-menu a, .top-menu label {
             color: #00ffcc;
             text-decoration: none;
-            padding: 10px 15px;
+            padding: 8px 12px;
             cursor: pointer;
             text-transform: uppercase;
-            transition: all 0.2s;
-            display: inline-block;
+            transition: background 0.2s, color 0.2s, text-shadow 0.2s;
+            border-radius: 5px;
         }
         .top-menu a:hover, .top-menu label:hover {
             background: #ff66cc;
