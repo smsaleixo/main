@@ -53,15 +53,17 @@
         .ad-left, .ad-right {
             background: #2a2a2a;
             width: 150px;
-            min-height: 400px;
+            min-height: 100%; /* Match container height */
             text-align: center;
-            line-height: 400px;
+            line-height: 50px; /* Adjust for text */
             border: 3px solid #00ffff;
             color: #00ffff;
+            overflow: hidden; /* Prevent overflow */
         }
         .main-section {
             display: flex;
             flex: 1;
+            min-height: 0; /* Allow flex to shrink */
         }
         .top-menu {
             background: #1a1a1a;
@@ -118,12 +120,16 @@
             flex: 1;
             padding: 20px;
             background: #1a1a1a;
+            overflow-y: auto; /* Enable vertical scroll */
+            position: relative;
+            z-index: 11;
         }
         iframe {
             width: 100%;
             height: 100%;
             border: 3px solid #00ffcc;
             background: #1a1a1a;
+            display: block; /* Prevent margin collapse */
         }
         #shoutout {
             background: #1a1a1a;
@@ -155,15 +161,9 @@
 </head>
 <body>
     <div class="container">
-        <!-- Top Ad -->
         <div class="ad-top">=== Ad Space ===</div>
-
-        <!-- Shoutout Banner -->
         <div id="shoutout">=== Welcome to Retro Util Hub ===</div>
-
-        <!-- Top Menu with Dropdowns & Chaos Toggle -->
         <nav class="top-menu">
-            <!-- Games -->
             <div class="dropdown">
                 <span class="dropdown-btn">Games</span>
                 <div class="dropdown-content">
@@ -171,7 +171,6 @@
                     <a onclick="loadPage('leaderboard.html')">Leaderboard</a>
                 </div>
             </div>
-            <!-- Image Utils -->
             <div class="dropdown">
                 <span class="dropdown-btn">Image Utils</span>
                 <div class="dropdown-content">
@@ -182,7 +181,6 @@
                     <a onclick="loadPage('qrcode.html')">QR Code Generator</a>
                 </div>
             </div>
-            <!-- Text Utils -->
             <div class="dropdown">
                 <span class="dropdown-btn">Text Utils</span>
                 <div class="dropdown-content">
@@ -192,7 +190,6 @@
                     <a onclick="loadPage('todo.html')">To-Do List</a>
                 </div>
             </div>
-            <!-- Editor Utils -->
             <div class="dropdown">
                 <span class="dropdown-btn">Editor Utils</span>
                 <div class="dropdown-content">
@@ -200,16 +197,12 @@
                     <a onclick="loadPage('pythoneditor.html')">Python Editor</a>
                 </div>
             </div>
-            <!-- Chaos Mode -->
             <label style="color: #00ffcc;">
                 <input type="checkbox" id="chaosMode" onchange="toggleChaos()"> Chaos Mode
             </label>
-            <!-- Standalone Pages -->
             <a onclick="loadPage('about.html')">About</a>
             <a onclick="loadPage('contact.html')">Contact</a>
         </nav>
-
-        <!-- Main Section with Side Ads and Content -->
         <div class="main-section">
             <div class="ad-left">=== Ad ===</div>
             <div class="content">
@@ -217,15 +210,12 @@
             </div>
             <div class="ad-right">=== Ad ===</div>
         </div>
-
-        <!-- Bottom Ad -->
         <div class="ad-bottom">=== Ad Space ===</div>
     </div>
 
     <script>
         function loadPage(page) {
             document.getElementById('contentFrame').src = page;
-            // new Audio('https://www.myinstants.com/media/sounds/beep.mp3').play(); // Uncomment for retro beep
         }
 
         function toggleChaos() {
