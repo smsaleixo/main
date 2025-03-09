@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Resizer</title>
+    <style>
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; text-align: center; }
+        canvas { border: 1px solid #ccc; max-width: 100%; max-height: 50%; }
+        .controls { margin: 10px 0; }
+        input, button { padding: 8px; margin: 5px; }
+        button { background: #333; color: white; border: none; cursor: pointer; }
+        button:hover { background: #555; }
+    </style>
+</head>
+<body>
+    <h1>Image Resizer</h1>
+    <canvas id="resizeCanvas"></canvas>
+    <div class="controls">
+        <input type="file" id="imageUpload" accept="image/*" onchange="loadImage(event)">
+        <input type="number" id="width" placeholder="Width (px)" min="1">
+        <input type="number" id="height" placeholder="Height (px)" min="1">
+        <button onclick="resizeImage()">Resize</button>
+        <button onclick="saveImage()">Save</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('resizeCanvas');
+        const ctx = canvas.getContext('2d');
+        let img = null;
+
+        function loadImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                img = new Image();
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                };
+                img.src = URL.createObjectURL(file);
+            }
+        }
+
+        function resizeImage() {
+            if (!img) return alert('Upload an image first!');
+            const width = parseInt(document.getElementById('width').value) || img.width;
+            const height = parseInt(document.getElementById('height').value) || img.height;
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+        }
+
+        function saveImage() {
+            if (!img) return alert('Resize an image first!');
+            const dataURL = canvas.toDataURL('image/jpeg', 0.9);
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'resized_image.jpg';
+            link.click();
+        }
+    </script>
+</body>
+</html>

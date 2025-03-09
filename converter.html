@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unit Converter</title>
+    <style>
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; text-align: center; }
+        input, select, button { padding: 8px; margin: 5px; }
+        button { background: #333; color: white; border: none; cursor: pointer; }
+        button:hover { background: #555; }
+        #result { font-size: 20px; margin: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Unit Converter</h1>
+    <input type="number" id="value" placeholder="Enter value">
+    <select id="fromUnit">
+        <option value="cm">cm</option>
+        <option value="inch">inch</option>
+    </select>
+    <select id="toUnit">
+        <option value="cm">cm</option>
+        <option value="inch">inch</option>
+    </select>
+    <button onclick="convert()">Convert</button>
+    <div id="result">-</div>
+
+    <script>
+        const result = document.getElementById('result');
+
+        function convert() {
+            const value = parseFloat(document.getElementById('value').value);
+            const from = document.getElementById('fromUnit').value;
+            const to = document.getElementById('toUnit').value;
+
+            if (isNaN(value)) return result.textContent = 'Enter a number!';
+            if (from === to) return result.textContent = value;
+
+            let converted;
+            if (from === 'cm' && to === 'inch') converted = value / 2.54;
+            else if (from === 'inch' && to === 'cm') converted = value * 2.54;
+            result.textContent = `${converted.toFixed(2)} ${to}`;
+        }
+    </script>
+</body>
+</html>

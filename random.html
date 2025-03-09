@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Generator</title>
+    <style>
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; text-align: center; }
+        #output { font-size: 20px; margin: 20px; }
+        select, button { padding: 8px; margin: 5px; }
+        button { background: #333; color: white; border: none; cursor: pointer; }
+        button:hover { background: #555; }
+    </style>
+</head>
+<body>
+    <h1>Random Generator</h1>
+    <select id="type">
+        <option value="number">Number (1-100)</option>
+        <option value="name">Name</option>
+        <option value="quote">Quote</option>
+    </select>
+    <button onclick="generate()">Generate</button>
+    <div id="output">-</div>
+
+    <script>
+        const output = document.getElementById('output');
+        const names = ['Alex', 'Bia', 'Chris', 'Dani', 'Eli'];
+        const quotes = ['Be yourself!', 'Dream big!', 'Stay cool!'];
+
+        function generate() {
+            const type = document.getElementById('type').value;
+            if (type === 'number') {
+                output.textContent = Math.floor(Math.random() * 100) + 1;
+            } else if (type === 'name') {
+                output.textContent = names[Math.floor(Math.random() * names.length)];
+            } else if (type === 'quote') {
+                output.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+            }
+        }
+    </script>
+</body>
+</html>

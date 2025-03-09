@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Screenshot Editor</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            max-width: 100%;
+            max-height: 70%;
+        }
+        .buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="screenshotCanvas"></canvas>
+    <div class="buttons">
+        <button onclick="pasteScreenshot()">Paste Screenshot</button>
+        <button onclick="saveAsJPG()">Save as JPG</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('screenshotCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Colar screenshot do clipboard
+        async function pasteScreenshot() {
+            try {
+                const clipboardItems = await navigator.clipboard.read();
+                for (const item of clipboardItems) {
+                    if (item.types.includes('image/png') || item.types.includes('image/jpeg')) {
+                        const blob = await item.getType(item.types[0]);
+                        const img = new Image();
+                        img.onload = () => {
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            ctx.drawImage(img, 0, 0);
+                        };
+                        img.src = URL.createObjectURL(blob);
+                        break;
+                    }
+                }
+            } catch (err) {
+                alert('Erro ao colar! Certifique-se de ter uma imagem no clipboard.');
+                console.error(err);
+            }
+        }
+
+        // Salvar como JPG
+        function saveAsJPG() {
+            const dataURL = canvas.toDataURL('image/jpeg', 0.9); // Qualidade 90%
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'screenshot.jpg';
+            link.click();
+        }
+    </script>
+</body>
+</html>

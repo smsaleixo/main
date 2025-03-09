@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Transformer</title>
+    <style>
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; text-align: center; }
+        textarea { width: 80%; height: 200px; font-size: 16px; margin-bottom: 10px; }
+        button { padding: 10px 20px; margin: 5px; background: #333; color: white; border: none; cursor: pointer; }
+        button:hover { background: #555; }
+    </style>
+</head>
+<body>
+    <h1>Text Transformer</h1>
+    <textarea id="textInput" placeholder="Type or paste text here..."></textarea><br>
+    <button onclick="toUpper()">Uppercase</button>
+    <button onclick="toLower()">Lowercase</button>
+    <button onclick="reverseText()">Reverse</button>
+    <button onclick="copyText()">Copy</button>
+
+    <script>
+        const input = document.getElementById('textInput');
+        function toUpper() { input.value = input.value.toUpperCase(); }
+        function toLower() { input.value = input.value.toLowerCase(); }
+        function reverseText() { input.value = input.value.split('').reverse().join(''); }
+        function copyText() { input.select(); document.execCommand('copy'); alert('Copied!'); }
+    </script>
+</body>
+</html>

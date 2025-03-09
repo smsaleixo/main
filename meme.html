@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meme Maker</title>
+    <style>
+        @font-face {
+            font-family: 'Pixel';
+            src: url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        }
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Pixel', monospace;
+            background: #1a1a1a;
+            color: #00ffcc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+        canvas {
+            border: 3px solid #ff00ff;
+            max-width: 100%;
+            max-height: 50%;
+            background: #1a1a1a;
+        }
+        .controls {
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 80%;
+            max-width: 400px;
+        }
+        input, select, button {
+            padding: 8px;
+            font-size: 14px;
+            font-family: 'Pixel', monospace;
+            background: #2a2a2a;
+            color: #00ffcc;
+            border: 3px solid #ff00ff;
+            transition: all 0.2s;
+        }
+        button {
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background: #ff00ff;
+            color: #1a1a1a;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+        .text-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="memeCanvas"></canvas>
+    <div class="controls">
+        <input type="file" id="imageUpload" accept="image/*" onchange="loadImage(event)">
+        <button onclick="pasteImage()">Paste Image</button>
+        <div class="text-options">
+            <input type="text" id="memeText" placeholder="Your Text" oninput="drawMeme()">
+            <input type="color" id="textColor" value="#00ffcc" onchange="drawMeme()">
+            <select id="textSize" onchange="drawMeme()">
+                <option value="20">20px</option>
+                <option value="30">30px</option>
+                <option value="40" selected>40px</option>
+                <option value="50">50px</option>
+                <option value="60">60px</option>
+                <option value="90">90px</option>
+            </select>
+            <label><input type="checkbox" id="textShadow" onchange="drawMeme()"> Shadow</label>
+            <select id="textPosition" onchange="drawMeme()">
+                <option value="top">Top</option>
+                <option value="center" selected>Center</option>
+                <option value="bottom">Bottom</option>
+                <option value="quarter">Quarter Down</option>
+                <option value="three-quarter">Three-Quarter Down</option>
+            </select>
+        </div>
+        <button onclick="saveMeme()">Save Meme</button>
+        <button onclick="shareMeme()">Share on X</button>
+        <button onclick="submitShoutout()">Submit for Shoutout</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('memeCanvas');
+        const ctx = canvas.getContext('2d');
+        let img = null;
+
+        function loadImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                img = new Image();
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    drawMeme();
+                };
+                img.src = URL.createObjectURL(file);
+            }
+        }
+
+        async function pasteImage() {
+            try {
+                const clipboardItems = await navigator.clipboard.read();
+                for (const item of clipboardItems) {
+                    if (item.types.includes('image/png') || item.types.includes('image/jpeg')) {
+                        const blob = await item.getType(item.types[0]);
+                        img = new Image();
+                        img.onload = () => {
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            drawMeme();
+                        };
+                        img.src = URL.createObjectURL(blob);
+                        break;
+                    }
+                }
+            } catch (err) {
+                alert('No image in clipboard!');
+            }
+        }
+
+        function drawMeme() {
+            if (!img) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0);
+
+            const text = document.getElementById('memeText').value.toUpperCase();
+            const color = document.getElementById('textColor').value;
+            const size = parseInt(document.getElementById('textSize').value);
+            const shadow = document.getElementById('textShadow').checked;
+            const position = document.getElementById('textPosition').value;
+
+            ctx.font = `bold ${size}px 'Pixel'`;
+            ctx.fillStyle = color;
+            ctx.textAlign = 'center';
+            ctx.lineWidth = 2;
+
+            if (shadow) {
+                ctx.shadowColor = '#ff00ff';
+                ctx.shadowBlur = 5;
+                ctx.shadowOffsetX = 2;
+                ctx.shadowOffsetY = 2;
+            } else {
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+            }
+
+            let textY;
+            switch (position) {
+                case 'top': textY = size + 10; break;
+                case 'center': textY = canvas.height / 2; break;
+                case 'bottom': textY = canvas.height - 20; break;
+                case 'quarter': textY = canvas.height / 4; break;
+                case 'three-quarter': textY = (canvas.height * 3) / 4; break;
+            }
+
+            ctx.fillText(text, canvas.width / 2, textY);
+            ctx.strokeStyle = '#1a1a1a';
+            ctx.strokeText(text, canvas.width / 2, textY);
+        }
+
+        function saveMeme() {
+            if (!img) return alert('Add an image first!');
+            drawMeme();
+            const dataURL = canvas.toDataURL('image/jpeg', 0.9);
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'meme.jpg';
+            link.click();
+        }
+
+        function shareMeme() {
+            if (!img) return alert('Add an image first!');
+            drawMeme();
+            const text = `Check out my retro meme! Play Snake: https://your-ad-page.com`;
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+            window.open(twitterUrl, '_blank');
+        }
+
+        function submitShoutout() {
+            if (!img) return alert('Add an image first!');
+            const playerName = prompt('Enter your name for the shoutout:');
+            if (playerName) {
+                let shoutouts = JSON.parse(localStorage.getItem('shoutouts')) || [];
+                shoutouts.push(`=== ${playerName} Made a Dope Meme ===`);
+                localStorage.setItem('shoutouts', JSON.stringify(shoutouts));
+                alert('Submitted for shoutout!');
+            }
+        }
+    </script>
+</body>
+</html>
