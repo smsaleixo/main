@@ -12,7 +12,7 @@
         html, body {
             margin: 0;
             padding: 0;
-            height: 100%; /* Ensure full height */
+            height: 100%;
             font-family: 'Pixel', monospace;
             background: #1a1a1a;
             color: #00ffcc;
@@ -23,7 +23,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            height: 100%; /* Explicit height */
+            height: 100%;
             position: relative;
             animation: bootUp 1s ease-in-out;
         }
@@ -51,36 +51,40 @@
             border: 3px solid #ff00ff;
             text-transform: uppercase;
             color: #ff66cc;
-            flex-shrink: 0; /* Prevent shrinking */
+            flex-shrink: 0;
         }
         .ad-left, .ad-right {
             background: #2a2a2a;
             width: 150px;
-            height: 100%; /* Match container */
+            height: 100%;
             text-align: center;
             line-height: 50px;
             border: 3px solid #00ffff;
             color: #00ffff;
             overflow: hidden;
-            flex-shrink: 0; /* Prevent shrinking */
+            flex-shrink: 0;
         }
         .main-section {
             display: flex;
             flex: 1;
             min-height: 0;
-            height: 100%; /* Ensure it takes remaining space */
+            height: 100%;
         }
         .top-menu {
             background: #1a1a1a;
             padding: 10px 0;
-            text-align: center;
             border-bottom: 3px dashed #00ffcc;
-            flex-shrink: 0; /* Prevent shrinking */
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
         .dropdown {
             position: relative;
-            display: inline-block;
-            margin: 0 20px;
+            display: inline-flex;
+            align-items: center;
         }
         .dropdown-btn {
             color: #00ffcc;
@@ -100,6 +104,8 @@
             min-width: 160px;
             border: 3px solid #ff00ff;
             z-index: 11;
+            top: 100%; /* Position below button */
+            left: 0;
         }
         .dropdown-content a {
             color: #00ffcc;
@@ -131,6 +137,17 @@
             background: #ff66cc;
             color: #1a1a1a;
         }
+        .top-menu a, .top-menu label {
+            color: #00ffcc;
+            text-decoration: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+        .top-menu a:hover, .top-menu label:hover {
+            text-shadow: 0 0 10px #00ffcc;
+        }
         .content {
             flex: 1;
             padding: 20px;
@@ -138,7 +155,7 @@
             overflow-y: auto;
             position: relative;
             z-index: 11;
-            min-height: 0; /* Allow flex to shrink */
+            min-height: 0;
         }
         iframe {
             width: 100%;
@@ -146,7 +163,7 @@
             border: 3px solid #00ffcc;
             background: #1a1a1a;
             display: block;
-            min-height: 400px; /* Fallback height for Chrome */
+            min-height: 400px;
         }
         #shoutout {
             background: #1a1a1a;
@@ -155,7 +172,7 @@
             text-align: center;
             border: 3px dashed #ff00ff;
             text-transform: uppercase;
-            flex-shrink: 0; /* Prevent shrinking */
+            flex-shrink: 0;
         }
         .chaos-on .dropdown-content a {
             animation: wobble 0.5s infinite;
