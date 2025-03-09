@@ -8,27 +8,29 @@
             font-family: 'Pixel';
             src: url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
         }
-        body {
+        html, body {
             margin: 0;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             background: #1a1a1a;
-            height: 100%; /* Match parent iframe */
+            min-height: 100%; /* Ensure full height */
             font-family: 'Pixel', monospace;
             color: #00ffcc;
+            box-sizing: border-box; /* Prevent padding issues */
         }
         canvas {
             border: 3px solid #ff00ff;
             background: #1a1a1a;
-            width: 100%; /* Responsive width */
-            height: auto; /* Auto height to fit content */
-            max-height: 100%; /* Limit to iframe height */
+            width: 400px; /* Fixed width */
+            height: 400px; /* Fixed height */
+            max-width: 100%; /* Responsive */
+            max-height: 100%; /* Fit within iframe */
         }
         #score, #highScore {
             font-size: 20px;
-            margin: 10px;
+            margin: 10px 0;
             text-transform: uppercase;
             text-shadow: 0 0 5px #00ffcc;
         }
